@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="styles.css">
+	<script src="script.js" defer></script>
+	<title>Drag-and-drop mission construction</title>
+</head>
+<body>
+	<br><br><br>
+	<b>Available commands:</b>
+	<div class="container">
+		<div class="draggable" draggable="true">
+			<!--<div class="svg-shape">
+				<span>move 10 steps</span>
+				<svg width="150" height="70">
+					<path stroke="#3373CC" fill="#4C97FF" fill-opacity="1" d="m 0,4 A 4,4 0 0,1 4,0 H 12 c 2,0 3,1 4,2 l 4,4 c 1,1 2,2 4,2 h 12 c 2,0 3,-1 4,-2 l 4,-4 c 1,-1 2,-2 4,-2 H 145.3670997619629 a 4,4 0 0,1 4,4 v 40  a 4,4 0 0,1 -4,4 H 48   c -2,0 -3,1 -4,2 l -4,4 c -1,1 -2,2 -4,2 h -12 c -2,0 -3,-1 -4,-2 l -4,-4 c -1,-1 -2,-2 -4,-2 H 4 a 4,4 0 0,1 -4,-4 z"></path>
+				</svg>
+			</div>-->
+			take off
+		</div>
+		
+		<div class="draggable" draggable="true">
+			move
+			<input type="number" name="m" id="m" value="5">
+			meters
+			<select name="p" id="p">
+				<option value="forward">forward</option>
+				<option value="backwards">backwards</option>
+				<option value="left">left</option>
+				<option value="right">right</option>
+				<option value="up">up</option>
+				<option value="down">down</option>
+			</select>
+		</div>
+		<div class="draggable" draggable="true">
+			rotate
+			<input type="number" name="d" id="d" value="45">
+			degrees
+			<select name="r" id="r">
+				<option value="clockwise">clockwise</option>
+				<option value="counterclockwise">counterclockwise</option>
+			</select>
+		</div>
+		<div class="draggable" draggable="true">land</div>
+	</div>
+	<br><br><br>
+	<b>Mission timeline:</b>
+	<div class="container" style="background-color: rgb(96, 216, 73);">
+		
+	</div>
+</body>
+</html>

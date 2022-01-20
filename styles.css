@@ -1,0 +1,39 @@
+body {
+  margin: 50px;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: #ddd;
+}
+
+.container {
+  background-color: #333;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.draggable {
+  padding: 1rem;
+  background-color: white;
+  border: 1px solid black;
+  cursor: move;
+}
+
+.draggable.dragging {
+  opacity: .5;
+}
+
+.svg-shape{
+  width: 100%;
+  height: auto;
+}
+
+.svg-shape span {
+  display: block;
+  position: absolute;
+  padding: 1rem;
+  color: #fff;
+}
+
+input{
+  width: 50px;
+}
