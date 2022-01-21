@@ -9,6 +9,7 @@ body {
   background-color: #333;
   padding: 1rem;
   margin-top: 1rem;
+  border-radius: .5rem;
 }
 
 .draggable {
@@ -16,6 +17,7 @@ body {
   background-color: white;
   border: 1px solid black;
   cursor: move;
+  border-radius: .5rem;
 }
 
 .draggable.dragging {
