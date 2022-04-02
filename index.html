@@ -9,58 +9,26 @@
 	<title>Drag-and-drop mission construction</title>
 </head>
 <body>
-	<form onsubmit="alert('Not ready yet... \ud83d\ude22'); return false;">
 	<br><br><br>
 
 	<b>Available commands:</b>
-	<div class="container">
-		<div class="draggable" draggable="true">
-			<!--<div class="svg-shape">
-				<span>move 10 steps</span>
-				<svg width="150" height="70">
-					<path stroke="#3373CC" fill="#4C97FF" fill-opacity="1" d="m 0,4 A 4,4 0 0,1 4,0 H 12 c 2,0 3,1 4,2 l 4,4 c 1,1 2,2 4,2 h 12 c 2,0 3,-1 4,-2 l 4,-4 c 1,-1 2,-2 4,-2 H 145.3670997619629 a 4,4 0 0,1 4,4 v 40  a 4,4 0 0,1 -4,4 H 48   c -2,0 -3,1 -4,2 l -4,4 c -1,1 -2,2 -4,2 h -12 c -2,0 -3,-1 -4,-2 l -4,-4 c -1,-1 -2,-2 -4,-2 H 4 a 4,4 0 0,1 -4,-4 z"></path>
-				</svg>
-			</div>-->
-			take off
-		</div>
+	<div class="container" id="commands">
 		
-		<div class="draggable" draggable="true">
-			move
-			<input type="number" name="m" id="m" value="5" min="0" required>
-			meters
-			<select name="p" id="p" required>
-				<option value="forward">forward</option>
-				<option value="backwards">backwards</option>
-				<option value="left">left</option>
-				<option value="right">right</option>
-				<option value="up">up</option>
-				<option value="down">down</option>
-			</select>
-		</div>
-		<div class="draggable" draggable="true">
-			rotate
-			<input type="number" name="d" id="d" value="45" min="0" required>
-			degrees
-			<select name="r" id="r" required>
-				<option value="clockwise">clockwise</option>
-				<option value="counterclockwise">counterclockwise</option>
-			</select>
-		</div>
-		<div class="draggable" draggable="true">land</div>
 	</div>
 
 	<br><br><br>
 
 	<b>Mission timeline:</b>
-	<div class="container" style="background-color: rgb(96, 216, 73);">
-		Drag and drop commands (from the list above) here to create a mission. It is also possible to re-order the commands.
+
+	<form id="generate">
+		<div id="timeline" class="container" style="background-color: rgb(96, 216, 73);">
+			Drag and drop commands (from the list above) here to create a mission. It is also possible to re-order the commands.
+			<br><br>
+		</div>
+
 		<br><br>
-	</div>
 
-	<br><br>
-
-	<input type="submit" value="Generate the mission JSON">
-
+		<input type="submit" value="Generate the mission JSON">
 	</form>
 </body>
 </html>
