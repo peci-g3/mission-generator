@@ -12,11 +12,13 @@ function init() {
 
 		<div class="draggable take-off" draggable="true">
 			take off
+			<input type="number" name="m" id="m" value="3" min="0" required>
+			meters
 		</div>
 
 		<div class="draggable move" draggable="true">
 			move
-			<input type="number" name="m" id="m" value="5" min="0" required>
+			<input type="number" name="m" id="m" value="10" min="0" required>
 			meters
 			<select name="p" id="p" required>
 				<option value="forward">forward</option>
@@ -26,16 +28,19 @@ function init() {
 				<option value="up">up</option>
 				<option value="down">down</option>
 			</select>
+			with speed of
+			<input type="number" name="s" id="s" value="5" min="0" required>
+			m/s
 		</div>
 
 		<div class="draggable rotate" draggable="true">
 			rotate
 			<input type="number" name="d" id="d" value="45" min="0" required>
 			degrees
-			<select name="r" id="r" required>
+			<!--<select name="r" id="r" required>
 				<option value="clockwise">clockwise</option>
 				<option value="counterclockwise">counterclockwise</option>
-			</select>
+			</select>-->
 		</div>
 
 		<div class="draggable land" draggable="true">
@@ -150,7 +155,7 @@ document.querySelector('#generate').addEventListener('submit', function (e) {
 	for (var i = 4; i < divChildren.length; i++) {
 
 		// TODO: Debug
-		console.log('id: ' + i + ' | type: ' + divChildren[i].className)
+		console.log(divChildren[i])
 
 		switch (divChildren[i].className) {
 			case 'draggable assign':
@@ -162,18 +167,21 @@ document.querySelector('#generate').addEventListener('submit', function (e) {
 				break
 
 			case 'draggable take-off':
-				// TODO: Access values from inputs to customize commands
-				text = 'takeoff drone, 5.m'
+				var meters = divChildren[i].querySelector('#m').value
+				text = 'takeoff drone, ' + meters + '.m'
 				break
 
 			case 'draggable move':
-				// TODO: Access values from inputs to customize commands
-				text = 'move drone, forward: 20.m, speed: 5.m/s'
+				var meters = divChildren[i].querySelector('#m').value
+				var position = divChildren[i].querySelector('#p').value
+				var speed = divChildren[i].querySelector('#s').value
+				text = 'move drone, ' + position + ': ' + meters + '.m, speed: ' + speed + '.m/s'
 				break
 
 			case 'draggable rotate':
-				// TODO: Access values from inputs to customize commands
-				text = 'turn drone, 90.deg'
+				var degrees = divChildren[i].querySelector('#d').value
+				//var rotation = divChildren[i].querySelector('#r').value		// Not needed for now
+				text = 'turn drone, ' + degrees + '.deg'
 				break
 
 			case 'draggable land':
