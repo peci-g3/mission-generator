@@ -118,37 +118,37 @@ document.querySelector('#generate').addEventListener('submit', function (e) {
 
 	// Error: empty timeline
 	if (divChildren.length < 5) {
-		alert('Could not generate mission JSON, because timeline is empty!')
+		alert('Could not generate mission file, because timeline is empty!')
 		return false
 	}
 
 	// Error: not enough commands
 	if (divChildren.length < 7) {
-		alert('Could not generate mission JSON, because timeline does not have enough commands!	\nMust have one "assign", one "arm" and one "take off" command obligatorily.')
+		alert('Could not generate mission file, because timeline does not have enough commands! \nMust have one "assign", one "arm" and one "take off" command obligatorily.')
 		return false
 	}
 
 	// Error: "assign" command not found
 	if (!hasClass(divChildren[4], 'assign')) {
-		alert('Could not generate mission JSON, because the first command of the timeline must be "assign"!')
+		alert('Could not generate mission file, because the first command of the timeline must be "assign"!')
 		return false
 	}
 
 	// Error: "arm" command not found
 	if (!hasClass(divChildren[5], 'arm')) {
-		alert('Could not generate mission JSON, because the second command of the timeline must be "arm"!')
+		alert('Could not generate mission file, because the second command of the timeline must be "arm"!')
 		return false
 	}
 
 	// Error: "take off" command not found
 	if (!hasClass(divChildren[6], 'take-off')) {
-		alert('Could not generate mission JSON, because the third command of the timeline must be "take off"!')
+		alert('Could not generate mission file, because the third command of the timeline must be "take off"!')
 		return false
 	}
 
 	// Error: "land" or "home" command not found
 	if (!hasClass(divChildren[divChildren.length - 1], 'land') && !hasClass(divChildren[divChildren.length - 1], 'home')) {
-		alert('Could not generate mission JSON, because the last command of the timeline must be "land" or "home"!')
+		alert('Could not generate mission file, because the last command of the timeline must be "land" or "home"!')
 		return false
 	}
 
@@ -200,11 +200,11 @@ document.querySelector('#generate').addEventListener('submit', function (e) {
 	}
 
 	// TODO: Debug
-	console.log('\n\nFINAL JSON:\n' + result)
+	console.log('\n\nFINAL OUTPUT:\n' + result)
 
 	// Error: something went wrong
 	if (result.indexOf('UNKNOWN') > -1) {
-		alert('Could not generate mission JSON, because an unknown command was provided on the timeline!')
+		alert('Could not generate mission file, because an unknown command was provided on the timeline!')
 		return false
 	}
 
