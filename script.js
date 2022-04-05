@@ -33,14 +33,31 @@ function init() {
 			m/s
 		</div>
 
-		<div class="draggable rotate" draggable="true">
+		<!--<div class="draggable go-to" draggable="true">
+			go to
+			<input type="number" name="lat" id="lat" value="40.63493931003116" required>
+			latitude
+			<input type="number" name="long" id="long" value="-8.659926876929458" required>
+			and longitude
+			with speed of
+			<input type="number" name="s" id="s" value="5" min="0" required>
+			m/s
+		</div>-->
+
+		<div class="draggable rotate-deg" draggable="true">
 			rotate
 			<input type="number" name="d" id="d" value="45" min="0" required>
 			degrees
-			<!--<select name="r" id="r" required>
-				<option value="clockwise">clockwise</option>
-				<option value="counterclockwise">counterclockwise</option>
-			</select>-->
+		</div>
+
+		<div class="draggable rotate-card" draggable="true">
+			rotate
+			<select name="c" id="c" required>
+				<option value="north">north</option>
+				<option value="south">south</option>
+				<option value="east">east</option>
+				<option value="west">west</option>
+			</select>
 		</div>
 
 		<div class="draggable land" draggable="true">
@@ -178,10 +195,21 @@ document.querySelector('#generate').addEventListener('submit', function (e) {
 				text = 'move drone, ' + position + ': ' + meters + '.m, speed: ' + speed + '.m/s'
 				break
 
-			case 'draggable rotate':
+			case 'draggable go-to':
+				var latitude = divChildren[i].querySelector('#lat').value
+				var longitude = divChildren[i].querySelector('#long').value
+				var speed = divChildren[i].querySelector('#s').value
+				text = 'move drone, lat: ' + latitude + ', lon: ' + longitude + ', alt: drone.position.alt, speed: ' + speed + '.m/s'
+				break
+
+			case 'draggable rotate-deg':
 				var degrees = divChildren[i].querySelector('#d').value
-				//var rotation = divChildren[i].querySelector('#r').value		// Not needed for now
 				text = 'turn drone, ' + degrees + '.deg'
+				break
+
+			case 'draggable rotate-card':
+				var cardinal = divChildren[i].querySelector('#c').value
+				text = 'turn drone, ' + cardinal
 				break
 
 			case 'draggable land':
