@@ -25,8 +25,6 @@ function init() {
 				<option value="backwards">backwards</option>
 				<option value="left">left</option>
 				<option value="right">right</option>
-				<option value="up">up</option>
-				<option value="down">down</option>
 			</select>
 			with speed of
 			<input type="number" name="s" id="s" value="5" min="0" required>
@@ -129,6 +127,7 @@ function generateMission(exportData, exportName) {
 document.querySelector('#generate').addEventListener('submit', function (e) {
 	e.preventDefault()
 
+	var text
 	var result = ''
 	var div = document.getElementById('timeline')
 	var divChildren = div.childNodes
@@ -170,10 +169,6 @@ document.querySelector('#generate').addEventListener('submit', function (e) {
 	}
 
 	for (var i = 4; i < divChildren.length; i++) {
-
-		// TODO: Debug
-		console.log(divChildren[i])
-
 		switch (divChildren[i].className) {
 			case 'draggable assign':
 				text = 'drone = assign any'
@@ -223,12 +218,8 @@ document.querySelector('#generate').addEventListener('submit', function (e) {
 			default:
 				text = 'UNKNOWN'
 		}
-
 		result += text + '\n\n'
 	}
-
-	// TODO: Debug
-	console.log('\n\nFINAL OUTPUT:\n' + result)
 
 	// Error: something went wrong
 	if (result.indexOf('UNKNOWN') > -1) {
