@@ -1,32 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link rel="stylesheet" href="styles.css">
 	<script src="script.js" defer></script>
-	<title>Drag-and-drop mission construction</title>
+	<title>Drag-and-drop mission generator</title>
 </head>
+
 <body>
-	<br><br>
 
-	<b>Available commands:</b>
-	<div class="container" id="commands">
-		
-	</div>
+	<div class="row">
+		<div class="column column-commands">
 
-	<br><br><br>
+			<b>Available commands:</b>
 
-	<b>Mission timeline:</b>
+			<div id="commands" class="container">
+			</div>
 
-	<form id="generate">
-		<div id="timeline" class="container" style="background-color: rgb(96, 216, 73);">
-			Drag and drop commands (from the list above) here to create a mission. It is also possible to re-order the commands.
-			<br><br>
+			<input type="submit" value="Generate mission file" form="generate" accesskey="s">
+
 		</div>
 
-		<input type="submit" value="Generate mission file" style="margin: 3rem 0;padding: 0.5rem 1rem;text-align: center;">
-	</form>
+		<div class="column column-timeline">
+
+			<b>Mission timeline:</b>
+
+			<form id="generate">
+
+				<div id="timeline" class="container" style="background-color: #60d849;">
+					Drag and drop commands here (from the list beside) to create a mission.
+					<br>
+					It is also possible to discard and re-order the commands.
+					<br><br>
+				</div>
+
+			</form>
+
+		</div>
+	</div>
+
 </body>
+
 </html>
