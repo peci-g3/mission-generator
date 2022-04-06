@@ -31,16 +31,16 @@ function init() {
 			m/s
 		</div>
 
-		<!--<div class="draggable go-to" draggable="true">
+		<div class="draggable go-to" draggable="true">
 			go to
-			<input type="number" name="lat" id="lat" value="40.63493931003116" required>
-			latitude
-			<input type="number" name="long" id="long" value="-8.659926876929458" required>
-			and longitude
+			<input type="number" name="lat" id="lat" value="40.63493931" style="width: 100px;" required>
+			latitude and
+			<input type="number" name="long" id="long" value="-8.65992687" style="width: 100px;" required>
+			longitude
 			with speed of
 			<input type="number" name="s" id="s" value="5" min="0" required>
 			m/s
-		</div>-->
+		</div>
 
 		<div class="draggable rotate-deg" draggable="true">
 			rotate
