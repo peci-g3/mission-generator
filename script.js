@@ -124,52 +124,45 @@ function generateMission(exportData, exportName) {
 	downloadAnchor.remove()
 }
 
-document.querySelector('#generate').addEventListener('submit', function (e) {
+document.querySelector('#generator').addEventListener('submit', function (e) {
 	e.preventDefault()
 
 	var text
 	var result = ''
-	var div = document.getElementById('timeline')
-	var divChildren = div.childNodes
+	var commands = document.querySelectorAll('#timeline > .draggable')
 
 	// Error: empty timeline
-	if (divChildren.length < 5) {
+	if (commands.length <= 0) {
 		alert('Could not generate mission file, because timeline is empty!')
 		return false
 	}
 
-	// Error: not enough commands
-	if (divChildren.length < 7) {
-		alert('Could not generate mission file, because timeline does not have enough commands! \nMust have one "assign", one "arm" and one "take off" command obligatorily.')
-		return false
-	}
-
 	// Error: "assign" command not found
-	if (!hasClass(divChildren[4], 'assign')) {
+	if (!commands[0] || !hasClass(commands[0], 'assign')) {
 		alert('Could not generate mission file, because the first command of the timeline must be "assign"!')
 		return false
 	}
 
 	// Error: "arm" command not found
-	if (!hasClass(divChildren[5], 'arm')) {
+	if (!commands[1] || !hasClass(commands[1], 'arm')) {
 		alert('Could not generate mission file, because the second command of the timeline must be "arm"!')
 		return false
 	}
 
 	// Error: "take off" command not found
-	if (!hasClass(divChildren[6], 'take-off')) {
+	if (!commands[2] || !hasClass(commands[2], 'take-off')) {
 		alert('Could not generate mission file, because the third command of the timeline must be "take off"!')
 		return false
 	}
 
 	// Error: "land" or "home" command not found
-	if (!hasClass(divChildren[divChildren.length - 1], 'land') && !hasClass(divChildren[divChildren.length - 1], 'home')) {
+	if (!hasClass(commands[commands.length - 1], 'land') && !hasClass(commands[commands.length - 1], 'home')) {
 		alert('Could not generate mission file, because the last command of the timeline must be "land" or "home"!')
 		return false
 	}
 
-	for (var i = 4; i < divChildren.length; i++) {
-		switch (divChildren[i].className) {
+	for (var i = 0; i < commands.length; i++) {
+		switch (commands[i].className) {
 			case 'draggable assign':
 				text = 'drone = assign any'
 				break
@@ -179,31 +172,31 @@ document.querySelector('#generate').addEventListener('submit', function (e) {
 				break
 
 			case 'draggable take-off':
-				var meters = divChildren[i].querySelector('#m').value
+				var meters = commands[i].querySelector('#m').value
 				text = 'takeoff drone, ' + meters + '.m'
 				break
 
 			case 'draggable move':
-				var meters = divChildren[i].querySelector('#m').value
-				var position = divChildren[i].querySelector('#p').value
-				var speed = divChildren[i].querySelector('#s').value
+				var meters = commands[i].querySelector('#m').value
+				var position = commands[i].querySelector('#p').value
+				var speed = commands[i].querySelector('#s').value
 				text = 'move drone, ' + position + ': ' + meters + '.m, speed: ' + speed + '.m/s'
 				break
 
 			case 'draggable go-to':
-				var latitude = divChildren[i].querySelector('#lat').value
-				var longitude = divChildren[i].querySelector('#long').value
-				var speed = divChildren[i].querySelector('#s').value
+				var latitude = commands[i].querySelector('#lat').value
+				var longitude = commands[i].querySelector('#long').value
+				var speed = commands[i].querySelector('#s').value
 				text = 'move drone, lat: ' + latitude + ', lon: ' + longitude + ', alt: drone.position.alt, speed: ' + speed + '.m/s'
 				break
 
 			case 'draggable rotate-deg':
-				var degrees = divChildren[i].querySelector('#d').value
+				var degrees = commands[i].querySelector('#d').value
 				text = 'turn drone, ' + degrees + '.deg'
 				break
 
 			case 'draggable rotate-card':
-				var cardinal = divChildren[i].querySelector('#c').value
+				var cardinal = commands[i].querySelector('#c').value
 				text = 'turn drone, ' + cardinal
 				break
 
