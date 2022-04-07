@@ -65,6 +65,16 @@ function init() {
 		<div class="draggable home" draggable="true">
 			home
 		</div>
+
+		<div class="draggable repeat" draggable="true" style="background-color: #ddd;">
+			begin repeat
+			<input type="number" name="t" id="t" value="4" min="2" required>
+			times {
+		</div>
+
+		<div class="draggable end" draggable="true" style="background-color: #ddd;">
+			} end repeat
+		</div>
 	`
 
 	draggables = document.querySelectorAll('.draggable')
@@ -198,6 +208,15 @@ document.querySelector('#generator').addEventListener('submit', function (e) {
 			case 'draggable rotate-card':
 				var cardinal = commands[i].querySelector('#c').value
 				text = 'turn drone, ' + cardinal
+				break
+
+			case 'draggable repeat':
+				var times = commands[i].querySelector('#t').value
+				text = times + '.times {'
+				break
+
+			case 'draggable end':
+				text = '}'
 				break
 
 			case 'draggable land':
