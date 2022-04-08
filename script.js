@@ -252,3 +252,34 @@ document.querySelector('#generator').addEventListener('submit', function (e) {
 		return true
 	}
 })
+
+document.querySelector('#generator').addEventListener('reset', function (e) {
+	e.preventDefault()
+
+	document.querySelector('#timeline').innerHTML = `
+		Drag and drop commands here (from the list beside) to create a mission.
+		<br>
+		It is also possible to discard and re-order the commands.
+		<br><br>
+
+		<div class="draggable assign" draggable="true">
+			assign
+		</div>
+
+		<div class="draggable arm" draggable="true">
+			arm
+		</div>
+
+		<div class="draggable take-off" draggable="true">
+			take off
+			<input type="number" name="m" id="m" value="3" min="0" required="">
+			meters
+		</div>
+
+		<div class="draggable land" draggable="true">
+			land
+		</div>
+	`
+	
+	init()
+})
