@@ -240,6 +240,15 @@ document.querySelector('#generator').addEventListener('submit', function (e) {
 	}
 
 	// Success: generating mission
-	generateMission(result, "mission")
-	return true
+	var filename = prompt('Mission name:', 'mission')
+	if (filename != null) {
+		if (filename == '' || filename.charAt(filename.length - 1) == '.') {
+			// Default filename
+			generateMission(result, 'mission')
+			return true
+		}
+		// Custom filename
+		generateMission(result, filename)
+		return true
+	}
 })
