@@ -5,7 +5,9 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 	<link rel="stylesheet" href="styles.css">
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 	<script src="script.js" defer></script>
 	<title>Mission Generator</title>
 </head>
@@ -63,6 +65,28 @@
 
 		</div>
 	</div>
+
+
+	<!-- Popup -->
+	<div id="popup"
+		style="visibility: hidden;position: fixed;z-index: 1;left: 0;top: 0;width: 100vw;height: 100vh;overflow: hidden;background-color: rgba(0,0,0,0.7);">
+		<!-- Map -->
+		<div id="map" style="height: 80vh;width: 80vw;border-radius: .5rem;margin: 10vh auto;"></div>
+	</div>
+
+	<script>
+		// Create Leaflet map
+		var map = L.map('map');
+
+		// Add Mapbox tiles layer
+		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}@2x?access_token={accessToken}', {
+			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+			id: 'mapbox/streets-v11',
+			tileSize: 512,
+			zoomOffset: -1,
+			accessToken: 'pk.eyJ1IjoiYWdvcmFhdmVpcm8iLCJhIjoiY2trbmNoeXd5MXN2cTJudGRodzhjbjR6bSJ9.dvGHDz58mhv1i46hWJvEtQ',
+		}).addTo(map);
+	</script>
 
 </body>
 

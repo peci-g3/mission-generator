@@ -33,10 +33,16 @@ function init() {
 
 		<div class="draggable go-to" draggable="true">
 			go to
-			<input type="number" name="lat" id="lat" value="40.63493931" style="width: 100px;" required>
+			<!--
+			<input type="text" name="lat" id="lat" value="40.63493931" style="width: 100px;" required readonly>
 			latitude and
-			<input type="number" name="long" id="long" value="-8.65992687" style="width: 100px;" required>
+			<input type="text" name="long" id="long" value="-8.65992687" style="width: 100px;" required readonly>
 			longitude
+			-->
+
+			coordinates
+			<input type="text" name="coords" id="coords" value="40.63493931 , -8.65992687" style="width: 280px;" required readonly>
+
 			with speed of
 			<input type="number" name="s" id="s" value="5" min="0" required>
 			m/s
@@ -280,6 +286,92 @@ document.querySelector('#generator').addEventListener('reset', function (e) {
 			land
 		</div>
 	`
-	
+
 	init()
 })
+
+// Default coordinates, currently IT - Instituto de Telecomunicações GPS coordinates
+const LATITUDE = 40.63493931
+const LONGITUDE = -8.65992687
+
+document.querySelector('.draggable.go-to input[type=text]').addEventListener('click', function (e) {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function (position) {
+			// Success, using user coordinates
+			openMap(position.coords.latitude, position.coords.longitude)
+		}, function (error) {
+			// ##### DEBUG #####
+			/*
+			switch (error.code) {
+				case error.PERMISSION_DENIED:
+					alert('User denied the request for Geolocation.')
+					break
+				case error.POSITION_UNAVAILABLE:
+					alert('Location information is unavailable.')
+					break
+				case error.TIMEOUT:
+					alert('The request to get user location timed out.')
+					break
+				case error.UNKNOWN_ERROR:
+					alert('An unknown error occurred.')
+					break
+			}
+			*/
+
+			// Error, using default coordinates
+			openMap(LATITUDE, LONGITUDE)
+		})
+	} else {
+		// ##### DEBUG #####
+		//alert('Geolocation is not supported by this browser.')
+
+		// Error, using default coordinates
+		openMap(LATITUDE, LONGITUDE)
+	}
+})
+
+var marker;
+
+function openMap(latitude, longitude) {
+
+	// Update map center coordinates
+	map.setView([latitude, longitude], 15)
+
+	if (marker) {
+		map.removeLayer(marker)
+	}
+
+	if (latitude != LATITUDE || longitude != LONGITUDE) {
+		// Create popup with current position and add it to the layer group
+		marker = L.marker([latitude, longitude]).addTo(map).bindPopup('Current position', { autoClose: false, closeOnEscapeKey: false, closeOnClick: false, closeButton: false }).openPopup()
+	}
+
+
+	// ##### DEBUG #####
+	/*
+	if (latitude == LATITUDE && longitude == LONGITUDE) {
+		alert('Opening map with DEFAULT \nLatitude: ' + latitude + '\nLongitude: ' + longitude)
+	} else {
+		alert('Opening map with CUSTOM \nLatitude: ' + latitude + '\nLongitude: ' + longitude)
+	}
+	*/
+
+
+	// Access the popup element
+	var popup = document.getElementById('popup')
+
+	// Make the popup visible
+	popup.style.visibility = 'visible'
+
+	// Handle click event on map
+	map.on('click', function (e) {
+		// ##### DEBUG #####
+		//console.log(e.latlng.lat, e.latlng.lng)
+
+		// Update go-to coordinates on input
+		document.querySelector('.draggable.go-to input[type=text]').value = e.latlng.lat + ' , ' + e.latlng.lng
+
+		// Make the popup invisible again
+		popup.style.visibility = 'hidden'
+	})
+}
