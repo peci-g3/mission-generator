@@ -33,16 +33,8 @@ function init() {
 
 		<div class="draggable go-to" draggable="true">
 			go to
-			<!--
-			<input type="text" name="lat" id="lat" value="40.63493931" style="width: 100px;" required readonly>
-			latitude and
-			<input type="text" name="long" id="long" value="-8.65992687" style="width: 100px;" required readonly>
-			longitude
-			-->
-
 			coordinates
 			<input type="text" name="coords" id="coords" value="40.63493931 , -8.65992687" style="width: 280px;" required readonly>
-
 			with speed of
 			<input type="number" name="s" id="s" value="5" min="0" required>
 			m/s
@@ -200,10 +192,9 @@ document.querySelector('#generator').addEventListener('submit', function (e) {
 				break
 
 			case 'draggable go-to':
-				var latitude = commands[i].querySelector('#lat').value
-				var longitude = commands[i].querySelector('#long').value
+				var coordinates = (commands[i].querySelector('#coords').value).split(' , ', 2)
 				var speed = commands[i].querySelector('#s').value
-				text = 'move drone, lat: ' + latitude + ', lon: ' + longitude + ', alt: drone.position.alt, speed: ' + speed + '.m/s'
+				text = 'move drone, lat: ' + coordinates[0] + ', lon: ' + coordinates[1] + ', alt: drone.position.alt, speed: ' + speed + '.m/s'
 				break
 
 			case 'draggable rotate-deg':
@@ -212,8 +203,8 @@ document.querySelector('#generator').addEventListener('submit', function (e) {
 				break
 
 			case 'draggable rotate-card':
-				var cardinal = commands[i].querySelector('#c').value
-				text = 'turn drone, ' + cardinal
+				var direction = commands[i].querySelector('#c').value
+				text = 'turn drone, ' + direction
 				break
 
 			case 'draggable repeat':
