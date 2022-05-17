@@ -285,11 +285,16 @@ document.querySelector('#generator').addEventListener('reset', function (e) {
 const LATITUDE = 40.63493931
 const LONGITUDE = -8.65992687
 
-document.querySelector('.draggable.go-to input[type=text]').addEventListener('click', function (e) {
+document.addEventListener('click', function (e) {
+	if (e.target.name != 'coords' || e.target.parentNode.className != 'draggable go-to') {
+		return false
+	}
+
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function (position) {
 			// Success, using user coordinates
 			openMap(position.coords.latitude, position.coords.longitude)
+			return true
 		}, function (error) {
 			// ##### DEBUG #####
 			/*
@@ -311,6 +316,7 @@ document.querySelector('.draggable.go-to input[type=text]').addEventListener('cl
 
 			// Error, using default coordinates
 			openMap(LATITUDE, LONGITUDE)
+			return false
 		})
 	} else {
 		// ##### DEBUG #####
@@ -318,6 +324,7 @@ document.querySelector('.draggable.go-to input[type=text]').addEventListener('cl
 
 		// Error, using default coordinates
 		openMap(LATITUDE, LONGITUDE)
+		return false
 	}
 })
 
@@ -360,9 +367,9 @@ function openMap(latitude, longitude) {
 		//console.log(e.latlng.lat, e.latlng.lng)
 
 		// Update go-to coordinates on input
-		document.querySelector('.draggable.go-to input[type=text]').value = e.latlng.lat + ' , ' + e.latlng.lng
+		document.querySelector('.draggable.go-to input[name=coords]').value = e.latlng.lat + ' , ' + e.latlng.lng
 
 		// Make the popup invisible again
 		popup.style.visibility = 'hidden'
-	})
+	}, { once: true })
 }
