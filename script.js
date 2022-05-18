@@ -75,6 +75,15 @@ function init() {
 		</div>
 	`
 
+	// ##### TODO: Temporary fix for issue #1 (https://github.com/peci-g3/mission-generator/issues/1) #####
+	if (document.querySelector('#timeline .draggable.go-to input[name=coords]')) {
+		query = document.querySelectorAll('#timeline .draggable.go-to input[name=coords]')
+		for (let i = 0; i < query.length; i++) {
+			query[i].disabled = true
+			query[i].style.pointerEvents = 'none'
+		}
+	}
+
 	draggables = document.querySelectorAll('.draggable')
 
 	draggables.forEach(draggable => {
