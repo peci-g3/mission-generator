@@ -1,6 +1,7 @@
 const containers = document.querySelectorAll('.container')
 
 function init() {
+	// Populate list of all available commands
 	document.querySelector('#commands').innerHTML = `
 		<div class="draggable assign" draggable="true">
 			assign
@@ -93,11 +94,13 @@ function init() {
 
 		draggable.addEventListener('dragend', () => {
 			draggable.classList.remove('dragging')
+			// Reset the list of all available commands and re-launch the drag event listeners on commands
 			init()
 		})
 	})
 }
 
+// First run when page load
 init()
 
 containers.forEach(container => {
@@ -127,10 +130,12 @@ function getDragAfterElement(container, y) {
 	}, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
+// Check if element has a certain class
 function hasClass(element, className) {
 	return ('' + element.className + '').indexOf('' + className + '') > -1
 }
 
+// Generate the mission file download
 function generateMission(exportData, exportName) {
 	var dataStr = 'data:text/plain;charset=utf-8,' + encodeURIComponent(exportData)
 	var downloadAnchor = document.createElement('a')
@@ -141,6 +146,7 @@ function generateMission(exportData, exportName) {
 	downloadAnchor.remove()
 }
 
+// Handle the generate mission file button
 document.querySelector('#generator').addEventListener('submit', function (e) {
 	e.preventDefault()
 
@@ -154,30 +160,31 @@ document.querySelector('#generator').addEventListener('submit', function (e) {
 		return false
 	}
 
-	// Error: "assign" command not found
+	// Error: "assign" command required but not found
 	if (!commands[0] || !hasClass(commands[0], 'assign')) {
 		alert('Could not generate mission file, because the first command of the timeline must be "assign"!')
 		return false
 	}
 
-	// Error: "arm" command not found
+	// Error: "arm" command required but not found
 	if (!commands[1] || !hasClass(commands[1], 'arm')) {
 		alert('Could not generate mission file, because the second command of the timeline must be "arm"!')
 		return false
 	}
 
-	// Error: "take off" command not found
+	// Error: "take off" command required but not found
 	if (!commands[2] || !hasClass(commands[2], 'take-off')) {
 		alert('Could not generate mission file, because the third command of the timeline must be "take off"!')
 		return false
 	}
 
-	// Error: "land" or "home" command not found
+	// Error: "land" or "home" command required but not found
 	if (!hasClass(commands[commands.length - 1], 'land') && !hasClass(commands[commands.length - 1], 'home')) {
 		alert('Could not generate mission file, because the last command of the timeline must be "land" or "home"!')
 		return false
 	}
 
+	// Interpret each of the commands that are on the mission timeline
 	for (var i = 0; i < commands.length; i++) {
 		switch (commands[i].className) {
 			case 'draggable assign':
@@ -248,12 +255,13 @@ document.querySelector('#generator').addEventListener('submit', function (e) {
 	// Success: generating mission
 	var filename = prompt('Mission name:', 'mission')
 	if (filename != null) {
+		// Prevent the file extension from being changed
 		if (filename == '' || filename.charAt(filename.length - 1) == '.') {
-			// Default filename
+			// Use default filename
 			generateMission(result, 'mission')
 			return true
 		}
-		// Custom filename
+		// Use custom filename given by the user
 		generateMission(result, filename)
 		return true
 	}
@@ -295,10 +303,12 @@ const LATITUDE = 40.63493931
 const LONGITUDE = -8.65992687
 
 document.addEventListener('click', function (e) {
+	// Check if click event was performed on coordinates input of a go-to command
 	if (e.target.name != 'coords' || e.target.parentNode.className != 'draggable go-to') {
 		return false
 	}
 
+	// Get the user GPS coordinates
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function (position) {
 			// Success, using user coordinates
@@ -349,7 +359,7 @@ function openMap(latitude, longitude) {
 	}
 
 	if (latitude != LATITUDE || longitude != LONGITUDE) {
-		// Create popup with current position and add it to the layer group
+		// Create popup with current user position and add it to the layer group
 		marker = L.marker([latitude, longitude]).addTo(map).bindPopup('Current position', { autoClose: false, closeOnEscapeKey: false, closeOnClick: false, closeButton: false }).openPopup()
 	}
 
