@@ -94,6 +94,8 @@ function init() {
 
 		draggable.addEventListener('dragend', () => {
 			draggable.classList.remove('dragging')
+			// Store it in the user localStorage
+			localStorage.setItem('mission-timeline', document.querySelector('#timeline').innerHTML)
 			// Reset the list of all available commands and re-launch the drag event listeners on commands
 			init()
 		})
@@ -102,6 +104,15 @@ function init() {
 
 // First run when page load
 init()
+
+// If the user already has a mission timeline stored on localStorage
+if (localStorage.getItem('mission-timeline')) {
+	// Load the latest mission timeline customized by the user
+	document.querySelector('#timeline').innerHTML = localStorage.getItem('mission-timeline')
+} else {
+	// Set the default mission timeline
+	resetTimeline()
+}
 
 containers.forEach(container => {
 	container.addEventListener('dragover', e => {
@@ -267,9 +278,11 @@ document.querySelector('#generator').addEventListener('submit', function (e) {
 	}
 })
 
-document.querySelector('#generator').addEventListener('reset', function (e) {
-	e.preventDefault()
+// Handle the reset timeline button
+document.querySelector('#generator').addEventListener('reset', resetTimeline)
 
+function resetTimeline() {
+	// Set default mission timeline
 	document.querySelector('#timeline').innerHTML = `
 		Drag and drop commands here (from the list beside) to create a mission.
 		<br>
@@ -294,9 +307,9 @@ document.querySelector('#generator').addEventListener('reset', function (e) {
 			land
 		</div>
 	`
-
-	init()
-})
+	// Store it in the user localStorage
+	localStorage.setItem('mission-timeline', document.querySelector('#timeline').innerHTML)
+}
 
 // Default coordinates, currently IT - Instituto de Telecomunicações GPS coordinates
 const LATITUDE = 40.63493931
@@ -355,11 +368,12 @@ function openMap(latitude, longitude) {
 	map.setView([latitude, longitude], 15)
 
 	if (marker) {
+		// Remove previous markers, if any
 		map.removeLayer(marker)
 	}
 
 	if (latitude != LATITUDE || longitude != LONGITUDE) {
-		// Create popup with current user position and add it to the layer group
+		// Create popup with current user position and add it to the map
 		marker = L.marker([latitude, longitude]).addTo(map).bindPopup('Current position', { autoClose: false, closeOnEscapeKey: false, closeOnClick: false, closeButton: false }).openPopup()
 	}
 
