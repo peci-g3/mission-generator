@@ -146,9 +146,23 @@ function hasClass(element, className) {
 	return ('' + element.className + '').indexOf('' + className + '') > -1
 }
 
+function postRequest(endpoint, body) {
+	console.log(body);
+	const xhr = new XMLHttpRequest();
+	xhr.open("POST", endpoint, true);
+	xhr.setRequestHeader('Content-Type', 'text/plain');
+	xhr.setRequestHeader("Access-Control-Allow-Origin","*");
+	xhr.send(body);
+}
+
 // Generate the mission file download
 function generateMission(exportData, exportName) {
 	var dataStr = 'data:text/plain;charset=utf-8,' + encodeURIComponent(exportData)
+
+	fetch(dataStr)
+		.then(response => response.text())
+		.then(text => postRequest("http://127.0.0.1:8001/missions", text));
+
 	var downloadAnchor = document.createElement('a')
 	downloadAnchor.setAttribute('href', dataStr)
 	downloadAnchor.setAttribute('download', exportName + '.groovy')
@@ -275,6 +289,8 @@ document.querySelector('#generator').addEventListener('submit', function (e) {
 		// Use custom filename given by the user
 		generateMission(result, filename)
 		return true
+
+
 	}
 })
 
