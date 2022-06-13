@@ -146,22 +146,24 @@ function hasClass(element, className) {
 	return ('' + element.className + '').indexOf('' + className + '') > -1
 }
 
-function postRequest(endpoint, body) {
-	console.log(body);
-	const xhr = new XMLHttpRequest();
-	xhr.open("POST", endpoint, true);
-	xhr.setRequestHeader('Content-Type', 'text/plain');
-	xhr.setRequestHeader("Access-Control-Allow-Origin","*");
-	xhr.send(body);
-}
-
-// Generate the mission file download
+// Generate the mission file download and send mission directly to the groundstation
 function generateMission(exportData, exportName) {
-	var dataStr = 'data:text/plain;charset=utf-8,' + encodeURIComponent(exportData)
+	fetch('http://127.0.0.1:8001/mission', {
+		method: 'POST',
+		mode: 'no-cors',
+		headers: {
+			'Content-Type': 'text/plain',
+			'Accept': 'application/json',
+			'Access-Control-Allow-Origin': '*'
+		}, 
+		body: exportData
+	}).then(res => {
+		console.log('SUCCESS: ', res);
+	}).catch(e => {
+		console.log('ERROR: ', e);
+    });
 
-	fetch(dataStr)
-		.then(response => response.text())
-		.then(text => postRequest("http://127.0.0.1:8001/missions", text));
+	var dataStr = 'data:text/plain;charset=utf-8,' + encodeURIComponent(exportData)
 
 	var downloadAnchor = document.createElement('a')
 	downloadAnchor.setAttribute('href', dataStr)
